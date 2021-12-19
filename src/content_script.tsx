@@ -1,10 +1,12 @@
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
-  if (msg.color) {
-    console.log('Receive color = ' + msg.color)
-    document.body.style.backgroundColor = 'green'
-    alert('Hi')
-    sendResponse('Change color to ' + msg.color)
-  } else {
-    sendResponse('Color message is none.')
+  if (msg.password) {
+    const passwordInputs = document.getElementsByTagName('input[type=password]')
+    if (passwordInputs.length === 0) {
+      sendResponse('No password input found')
+    }
+
+    Array.from(passwordInputs).forEach((input) => {
+      ;(input as any).value = msg.password
+    })
   }
 })
